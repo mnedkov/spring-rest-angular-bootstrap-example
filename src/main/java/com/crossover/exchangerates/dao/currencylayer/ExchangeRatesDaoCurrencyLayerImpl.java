@@ -24,8 +24,8 @@ public class ExchangeRatesDaoCurrencyLayerImpl implements ExchangeRatesDao {
 	RestTemplate restTemplate = new RestTemplate();
 
 	@Autowired
-	public ExchangeRatesDaoCurrencyLayerImpl(@Value("${currencylayer.access.key}") String currencyLayerAccessKey) {
-		this.currencyLayerURLTemplate = "http://apilayer.net/api/%s?access_key=" + currencyLayerAccessKey;
+	public ExchangeRatesDaoCurrencyLayerImpl(@Value("${currencylayer.url}") String currencyLayerURL, @Value("${currencylayer.access.key}") String currencyLayerAccessKey) {
+		this.currencyLayerURLTemplate =currencyLayerURL + "%s?access_key=" + currencyLayerAccessKey;
 	}
 
 	@Override
