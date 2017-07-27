@@ -19,7 +19,8 @@ import com.crossover.exchangerates.exception.CurrencyServerException;
 @Repository
 public class ExchangeRatesDaoCurrencyLayerImpl implements ExchangeRatesDao {
 	private String currencyLayerURLTemplate;
-
+	
+        // package-private to facilitate unit testing
 	RestTemplate restTemplate = new RestTemplate();
 
 	@Autowired
