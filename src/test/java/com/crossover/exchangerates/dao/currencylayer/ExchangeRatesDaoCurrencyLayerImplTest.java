@@ -24,6 +24,8 @@ import com.crossover.exchangerates.service.ExchangeRatesService;
 @RunWith(MockitoJUnitRunner.class)
 public class ExchangeRatesDaoCurrencyLayerImplTest {
 
+	private static final String CURRECY_LAYER_URL = "http://apilayer.net/api/";
+
 	private static final String ACCESS_KEY = "ac";
 
 	private ExchangeRatesDaoCurrencyLayerImpl instance;
@@ -39,13 +41,13 @@ public class ExchangeRatesDaoCurrencyLayerImplTest {
 
 	@Before
 	public void setUp() {
-		instance = new ExchangeRatesDaoCurrencyLayerImpl(ACCESS_KEY);
+		instance = new ExchangeRatesDaoCurrencyLayerImpl(CURRECY_LAYER_URL, ACCESS_KEY);
 		instance.restTemplate = restTemplateMock;
 	}
 
 	@Test
 	public void get_exchange_rates_calls_correct_url() {
-		String expectedUrl = "http://apilayer.net/api/live?access_key=" + ACCESS_KEY;
+		String expectedUrl = CURRECY_LAYER_URL + "live?access_key=" + ACCESS_KEY;
 		when(restTemplateMock.getForObject(expectedUrl, LiveResponse.class)).thenReturn(liveResponseMock);
 		when(liveResponseMock.isSuccess()).thenReturn(true);
 		instance.getExchangeRates();
@@ -54,7 +56,7 @@ public class ExchangeRatesDaoCurrencyLayerImplTest {
 
 	@Test
 	public void get_exchange_rates_throws_exception() {
-		String expectedUrl = "http://apilayer.net/api/live?access_key=" + ACCESS_KEY;
+		String expectedUrl = CURRECY_LAYER_URL + "live?access_key=" + ACCESS_KEY;
 		when(restTemplateMock.getForObject(expectedUrl, LiveResponse.class)).thenReturn(liveResponseMock);
 		when(liveResponseMock.isSuccess()).thenReturn(false);
 		when(liveResponseMock.getError()).thenReturn(errorMock);
