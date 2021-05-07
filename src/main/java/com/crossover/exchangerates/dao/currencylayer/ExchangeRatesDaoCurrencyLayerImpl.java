@@ -18,43 +18,45 @@ import com.crossover.exchangerates.exception.CurrencyServerException;
 
 @Repository
 public class ExchangeRatesDaoCurrencyLayerImpl implements ExchangeRatesDao {
-	private String currencyLayerURLTemplate;
-	
-        // package-private to facilitate unit testing
-	RestTemplate restTemplate = new RestTemplate();
+    private String currencyLayerURLTemplate;
 
-	@Autowired
-	public ExchangeRatesDaoCurrencyLayerImpl(@Value("${currencylayer.url}") String currencyLayerURL, @Value("${currencylayer.access.key}") String currencyLayerAccessKey) {
-		this.currencyLayerURLTemplate =currencyLayerURL + "%s?access_key=" + currencyLayerAccessKey;
-	}
+    // package-private to facilitate unit testing
+    RestTemplate restTemplate = new RestTemplate();
 
-	@Override
-	public Map<String, Double> getExchangeRates() {
-		String url = format(currencyLayerURLTemplate, "live");
-		LiveResponse response = callCurrencyLayer(url, LiveResponse.class);
-		Map<String, Double> quotes = response.getQuotes();
-		Map<String, Double> exchangeRates = new TreeMap<String, Double>();
-		if (quotes != null) {
-			for (Map.Entry<String, Double> entry : quotes.entrySet()) {
-				exchangeRates.put(entry.getKey().substring(3), entry.getValue());
-			}
-		}
-		return exchangeRates;
-	}
+    @Autowired
+    public ExchangeRatesDaoCurrencyLayerImpl(@Value("${currencylayer.url}") String currencyLayerURL,
+            @Value("${currencylayer.access.key}") String currencyLayerAccessKey) {
+        this.currencyLayerURLTemplate = currencyLayerURL + "%s?access_key=" + currencyLayerAccessKey;
+    }
 
-	@Override
-	public Map<String, String> getCurrencies() {
-		String url = format(currencyLayerURLTemplate, "list");
-		ListResponse response = callCurrencyLayer(url, ListResponse.class);
-		return response.getCurrencies() != null ? new TreeMap<>(response.getCurrencies()) : new TreeMap<String, String>();
-	}
+    @Override
+    public Map<String, Double> getExchangeRates() {
+        String url = format(currencyLayerURLTemplate, "live");
+        LiveResponse response = callCurrencyLayer(url, LiveResponse.class);
+        Map<String, Double> quotes = response.getQuotes();
+        Map<String, Double> exchangeRates = new TreeMap<String, Double>();
+        if (quotes != null) {
+            for (Map.Entry<String, Double> entry : quotes.entrySet()) {
+                exchangeRates.put(entry.getKey().substring(3), entry.getValue());
+            }
+        }
+        return exchangeRates;
+    }
 
-	private <T extends BaseResponse> T callCurrencyLayer(String url, Class<T> responseClass) {
-		T response = restTemplate.getForObject(url, responseClass);
-		if (!response.isSuccess()) {
-			throw new CurrencyServerException(response.getError().getInfo());
-		}
-		return response;
-	}
+    @Override
+    public Map<String, String> getCurrencies() {
+        String url = format(currencyLayerURLTemplate, "list");
+        ListResponse response = callCurrencyLayer(url, ListResponse.class);
+        return response.getCurrencies() != null ? new TreeMap<>(response.getCurrencies())
+                : new TreeMap<String, String>();
+    }
+
+    private <T extends BaseResponse> T callCurrencyLayer(String url, Class<T> responseClass) {
+        T response = restTemplate.getForObject(url, responseClass);
+        if (!response.isSuccess()) {
+            throw new CurrencyServerException(response.getError().getInfo());
+        }
+        return response;
+    }
 
 }

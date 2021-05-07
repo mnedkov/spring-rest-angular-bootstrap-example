@@ -2,18 +2,30 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>crossover</groupId>
-	<artifactId>crossover</artifactId>
+	<groupId>exchange-rates</groupId>
+	<artifactId>exchange-rates</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>crossover</name>
+	<name>exchange-rates</name>
+	<properties>
+		<java.version>1.8</java.version>
+	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>2.0.48-beta</version>
+			<version>3.8.0</version>
+			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -62,8 +74,8 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.2</version>
 					<configuration>
-						<source>1.7</source>
-						<target>1.7</target>
+						<source>1.8</source>
+						<target>1.8</target>
 					</configuration>
 				</plugin>
 				<plugin>

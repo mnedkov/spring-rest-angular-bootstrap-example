@@ -7,3 +7,6 @@ To install the application in your container it is always best to refer the inst
 If you use Tomcat 8 then usually(dependending on your server configuration) it is enough to just drop the war file into the web apps directory. Alternatively, one can use the manager application which is a web UI for administering the server(including deplyment of new applications). More info can be found here: https://tomcat.apache.org/tomcat-7.0-doc/manager-howto.html#Deploy_A_New_Application_Archive_%28WAR%29_Remotely
 
 The installation procedure for other containers is somehow similar - drop the war file into the designated folder or use the web UI.
+
+For dev purposes, run using webapp runner: 
+java -jar target/dependency/webapp-runner.jar --port 8081 target/*.war
