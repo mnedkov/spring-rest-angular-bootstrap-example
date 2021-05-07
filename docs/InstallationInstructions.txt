@@ -8,5 +8,5 @@ If you use Tomcat 8 then usually(dependending on your server configuration) it i
 
 The installation procedure for other containers is somehow similar - drop the war file into the designated folder or use the web UI.
 
-For dev purposes, run using webapp runner::   
+For dev purposes, run using webapp runner:
 java -jar target/dependency/webapp-runner.jar --port 8081 target/*.war
